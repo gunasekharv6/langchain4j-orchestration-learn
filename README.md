@@ -153,7 +153,7 @@ real project):
    has no dedicated supervisor/swarm package (confirmed by reading its own
    root `pom.xml` module list); the idiomatic way to compose specialists
    is compiling each as its own `StateGraph`, then attaching it to a
-   parent graph with `addSubgraph(...)`, routed with an ordinary
+   parent graph with `addNode(id, compiledSubgraph)`, routed with an ordinary
    conditional edge.
 5. `course.langgraph4j.capstone.OnCallDebugGraph` -- the identical
    on-call-debugging scenario as `course.capstone.OnCallDebugAgent` (same

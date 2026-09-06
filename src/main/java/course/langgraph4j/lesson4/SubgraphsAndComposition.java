@@ -29,9 +29,11 @@ import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
  * The idiomatic way to compose specialists here is simpler and lower-level:
  * compile each specialist as its OWN StateGraph, then attach the resulting
  * CompiledGraph as a single node in a parent graph with
- * StateGraph.addSubgraph(String, CompiledGraph<State>) -- confirmed against
- * StateGraph.java's addSubgraph/addNode(CompiledGraph) overloads. A
- * subgraph and its parent must share the same AgentState type: the
+ * StateGraph.addNode(String, CompiledGraph<State>) -- StateGraph also has
+ * an addSubgraph(String, CompiledGraph<State>) overload, but it's
+ * deprecated and marked for removal (confirmed by an actual compile: it
+ * emits a [removal] warning), so addNode is the one to use. A subgraph
+ * and its parent must share the same AgentState type: the
  * subgraph's nodes just read and write the same shared state as any other
  * node in the parent.
  *
@@ -139,8 +141,8 @@ public class SubgraphsAndComposition {
         });
 
         CompiledGraph<IncidentState> parent = new StateGraph<>(IncidentState.SCHEMA, IncidentState::new)
-                .addSubgraph("triage", triageSubgraph)
-                .addSubgraph("research", researchSubgraph)
+                .addNode("triage", triageSubgraph)
+                .addNode("research", researchSubgraph)
                 .addNode("synthesize", synthesize)
                 .addEdge(START, "triage")
                 .addConditionalEdges("triage", needsResearch, Map.of("investigate", "research", "skip", "synthesize"))
@@ -160,7 +162,7 @@ public class SubgraphsAndComposition {
         System.out.println(
                 "\nEach specialist (triage, research) is a complete, independently testable "
                         + "StateGraph -- you could invoke buildTriageSubgraph(...) on its own in a "
-                        + "unit test. Composing them is just addSubgraph plus an ordinary conditional "
+                        + "unit test. Composing them is just addNode(id, compiledSubgraph) plus an ordinary conditional "
                         + "edge; there's no separate hand-off protocol to learn beyond what lessons 1 "
                         + "and 2 already covered.");
     }

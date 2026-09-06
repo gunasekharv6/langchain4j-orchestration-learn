@@ -142,8 +142,8 @@ public class OnCallDebugGraph {
         });
 
         StateGraph<CapstoneState> graph = new StateGraph<>(CapstoneState.SCHEMA, CapstoneState::new)
-                .addSubgraph("triage", triageSubgraph)
-                .addSubgraph("research", researchSubgraph)
+                .addNode("triage", triageSubgraph)
+                .addNode("research", researchSubgraph)
                 .addNode("remediate", remediate)
                 .addNode("synthesize", synthesize)
                 .addEdge(START, "triage")
