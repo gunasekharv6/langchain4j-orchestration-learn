@@ -94,25 +94,25 @@ public class OnCallDebugAgent {
     // Specialists
     // ---------------------------------------------------------------
 
-    interface TriageAgent {
+    public interface TriageAgent {
         @UserMessage("Triage this incident for {{service}} using Datadog and Jenkins.")
         @Agent("Triages incidents using Datadog and Jenkins")
         String triage(@V("service") String service);
     }
 
-    interface ResearchAgent {
+    public interface ResearchAgent {
         @UserMessage("Research the root cause for {{service}} using GitHub history and runbooks, given triage: {{triage}}")
         @Agent("Researches root cause using GitHub and Confluence")
         String research(@V("service") String service, @V("triage") String triage);
     }
 
-    interface RemediationAgent {
+    public interface RemediationAgent {
         @UserMessage("Propose and execute remediation for {{service}}, given research: {{research}}")
         @Agent("Proposes and executes remediation")
         String remediate(@V("service") String service, @V("research") String research);
     }
 
-    interface IncidentSynthesizer {
+    public interface IncidentSynthesizer {
         @UserMessage("""
                 Write a final incident summary for {{service}} combining:
                 Triage: {{triage}}

@@ -45,25 +45,25 @@ import java.util.Map;
  */
 public class SupervisorPattern {
 
-    interface TriageAgent {
+    public interface TriageAgent {
         @UserMessage("Triage this incident using monitoring signals. Service: {{service}}")
         @Agent("Triages incidents using monitoring signals")
         String triage(@V("service") String service);
     }
 
-    interface ResearchAgent {
+    public interface ResearchAgent {
         @UserMessage("Research the root cause given this triage finding: {{triage}}")
         @Agent("Researches root cause from source control and runbooks")
         String research(@V("triage") String triage);
     }
 
-    interface RemediationAgent {
+    public interface RemediationAgent {
         @UserMessage("Propose a remediation action given this research: {{research}}")
         @Agent("Proposes a remediation action")
         String remediate(@V("research") String research);
     }
 
-    interface IncidentSynthesizer {
+    public interface IncidentSynthesizer {
         @UserMessage("""
                 Write a final one-paragraph incident summary combining:
                 Triage: {{triage}}

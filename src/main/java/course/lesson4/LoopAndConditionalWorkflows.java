@@ -31,7 +31,7 @@ public class  LoopAndConditionalWorkflows {
     // PART A -- loop workflow
     // ============================================================
 
-    interface QualityScorer {
+    public interface QualityScorer {
         @UserMessage("""
                 Score the quality of this incident postmortem draft from 0.0 to 1.0.
                 Return ONLY the number, nothing else.
@@ -41,7 +41,7 @@ public class  LoopAndConditionalWorkflows {
         Double score(@V("draft") String draft);
     }
 
-    interface DraftEditor {
+    public interface DraftEditor {
         @UserMessage("""
                 Improve this postmortem draft; its current quality score is {{score}}.
                 Draft: {{draft}}
@@ -96,13 +96,13 @@ public class  LoopAndConditionalWorkflows {
     // PART B -- conditional workflow
     // ============================================================
 
-    interface AutoResolver {
+    public interface AutoResolver {
         @UserMessage("Write a one-sentence log entry: this low-severity incident on {{service}} was auto-resolved.")
         @Agent("Auto-resolves low severity incidents")
         String resolve(@V("service") String service);
     }
 
-    interface OncallPager {
+    public interface OncallPager {
         @UserMessage("Write a one-sentence page message for on-call about a high-severity incident on {{service}}.")
         @Agent("Pages on-call for high severity incidents")
         String page(@V("service") String service);

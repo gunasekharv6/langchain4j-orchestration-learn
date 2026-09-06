@@ -35,7 +35,7 @@ public class SequentialAndParallelWorkflows {
     // PART A -- sequential workflow
     // ============================================================
 
-    interface SeverityClassifier {
+    public interface SeverityClassifier {
         @UserMessage("""
                 Classify incident severity as exactly one word: "high" or "low".
                 Rule: if the error rate is above 5%, answer "high", otherwise "low".
@@ -46,7 +46,7 @@ public class SequentialAndParallelWorkflows {
         String classify(@V("errorRate") String errorRate);
     }
 
-    interface IncidentSummarizer {
+    public interface IncidentSummarizer {
         @UserMessage("""
                 Write a one-sentence incident summary for {{service}} given severity={{severity}}.
                 """)
@@ -93,13 +93,13 @@ public class SequentialAndParallelWorkflows {
     // PART B -- parallel workflow
     // ============================================================
 
-    interface DatadogChecker {
+    public interface DatadogChecker {
         @UserMessage("Report the current error rate for {{service}} in one short sentence.")
         @Agent("Checks Datadog for error rate")
         String checkErrors(@V("service") String service);
     }
 
-    interface JenkinsChecker {
+    public interface JenkinsChecker {
         @UserMessage("Report the most recent deploy info for {{service}} in one short sentence.")
         @Agent("Checks Jenkins for recent deploys")
         String checkDeploys(@V("service") String service);
